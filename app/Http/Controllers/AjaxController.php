@@ -39,6 +39,9 @@ class AjaxController extends Controller
     public function list_transaksi($request){
         $query = Transaksi::query()->with('bagian');
         return DataTables::of($query)
+        ->addColumn('tanggal', function($item) {
+            return date('d/m/Y', strtotime($item->tanggal));
+        })
         ->addColumn('bagian', function(Transaksi $transaksi) {
             return $transaksi->bagian->nama;
         })

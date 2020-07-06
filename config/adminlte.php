@@ -352,18 +352,50 @@ return [
             ],
         ],
         [
-            'name' => 'Pace',
+            'name' => 'Datepicker',
             'active' => false,
             'files' => [
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'asset' => true,
+                    'location' => '/vendor/datepicker/datepicker.css',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                    'asset' => true,
+                    'location' => '/vendor/datepicker/datepicker.js',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Moment',
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/moment/moment-with-locales.min.js',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Daterangepicker',
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/daterangepicker/daterangepicker.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/daterangepicker/daterangepicker.js',
                 ],
             ],
         ],

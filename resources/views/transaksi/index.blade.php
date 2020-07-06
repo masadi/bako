@@ -10,6 +10,7 @@
 		</div>
 		<div class="col-sm-6">
 			<a href="{{route('transaksi.tambah')}}" class="toggle-modal btn btn-primary float-right">Tambah Transaksi</a>
+			<a href="{{route('transaksi.download')}}" class="mr-2 toggle-modal btn btn-success float-right">Download Transaksi</a>
 		</div>
 	</div>
 </div>
@@ -23,6 +24,7 @@
 				<table id="datatable" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
+							<th class="text-center">Tanggal</th>
 							<th class="text-center">Bagian</th>
 							<th style="width: 5%" class="text-center">No</th>
 							<th class="text-center">Bruto</th>
@@ -42,6 +44,9 @@
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
 @section('plugins.Select2', true)
+@section('plugins.Moment', true)
+@section('plugins.Daterangepicker', true)
+@section('plugins.Datepicker', true)
 @section('js')
 <script>
 	$.ajaxSetup({
@@ -57,6 +62,7 @@
         "serverSide": true,
         "ajax": "{{ route('api.datatables', ['query' => 'transaksi']) }}",
 		"columns": [
+			{ "data": "tanggal", "name": "tanggal" },
             { "data": "bagian", "name": "bagian.nama" },
 			{ "data": "nomor", "name": "nomor" },
 			{ "data": "bruto", "name": "bruto" },
@@ -67,6 +73,38 @@
 			turn_on_icheck();
 		}
     });
+	$('a.toggle-select').click(function(e) {
+		e.preventDefault();
+		Swal.fire({
+			title: 'Select field validation',
+			input: 'select',
+			inputOptions: {
+				'Fruits': {
+				apples: 'Apples',
+				bananas: 'Bananas',
+				grapes: 'Grapes',
+				oranges: 'Oranges'
+				},
+				'Vegetables': {
+				potato: 'Potato',
+				broccoli: 'Broccoli',
+				carrot: 'Carrot'
+				},
+				'icecream': 'Ice cream'
+			},
+			inputPlaceholder: 'Select a fruit',
+			showCancelButton: true,
+			inputValidator: (value) => {
+				return new Promise((resolve) => {
+				if (value === 'oranges') {
+					resolve()
+				} else {
+					resolve('You need to select oranges :)')
+				}
+				})
+			}
+			})
+	});
 	function turn_on_icheck(){
 	$('a.toggle-modal').bind('click',function(e) {
 			e.preventDefault();

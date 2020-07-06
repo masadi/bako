@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('transaksi')->group(function () {
         Route::get('/', 'TransaksiController@index')->name('transaksi.index');
         Route::get('/tambah', 'TransaksiController@tambah')->name('transaksi.tambah');
+        Route::get('/download', 'TransaksiController@download')->name('transaksi.download');
+        Route::get('/download/{output}/{start}/{end}', 'TransaksiController@download')->name('transaksi.output_download');
+        Route::post('/download', 'TransaksiController@download')->name('transaksi.download');
         Route::post('/simpan', 'TransaksiController@simpan')->name('transaksi.simpan');
     });
     Route::prefix('profile')->group(function () {

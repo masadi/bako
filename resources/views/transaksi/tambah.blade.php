@@ -4,6 +4,12 @@
 @section('content')
 <div class="alert alert-danger alert-error" style="display: none;"></div>
 <div class="form-group row">
+	<label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="tanggal" placeholder="Tanggal" data-toggle="datepicker" value="{{date('d-m-Y')}}">
+	</div>
+</div>
+<div class="form-group row">
 	<label for="bagian_id" class="col-sm-2 col-form-label">Interval</label>
 	<div class="col-sm-10">
 		<select id="bagian_id" class="select2 form-control">
@@ -45,6 +51,13 @@
 @endsection
 @section('js')
 	<script>
+		$('[data-toggle="datepicker"]').datepicker({
+  			date: new Date(),
+			endDate: new Date(),
+			format: 'dd-mm-yyyy',
+			autoHide: true,
+        	zIndex: 2048,
+		});
 		$('.select2').select2({theme:'bootstrap4'})
 		$('#bruto').keyup(function(){
 			var bruto = $(this).val();
@@ -66,6 +79,7 @@
 				url: '{{route('transaksi.simpan')}}',
 				type: 'post',
 				data: {
+					tanggal:$('#tanggal').datepicker('getDate', true),
 					bagian_id:$('#bagian_id').val(),
 					nomor:$('#nomor').val(),
 					bruto:$('#bruto').val(),
