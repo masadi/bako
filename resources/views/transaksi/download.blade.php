@@ -1,6 +1,6 @@
 @extends('layouts.modal')
 
-@section('title', 'Tambah Transaksi')
+@section('title', 'Download Transaksi')
 @section('content')
 <div class="alert alert-danger alert-error" style="display: none;"></div>
 <div class="form-group row">

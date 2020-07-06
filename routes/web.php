@@ -37,6 +37,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/download', 'TransaksiController@download')->name('transaksi.download');
         Route::post('/simpan', 'TransaksiController@simpan')->name('transaksi.simpan');
     });
+    Route::prefix('rekapitulasi')->group(function () {
+        Route::get('/', 'RekapController@index')->name('rekapitulasi.index');
+        Route::post('/rekap', 'RekapController@rekap')->name('rekapitulasi.rekap');
+    });
     Route::prefix('profile')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
         Route::post('/update', 'ProfileController@update')->name('profile.update');

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'eBako | Profile')
+@section('title', 'eBako | Rekapitulasi')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Profile</h1>
+    <h1 class="m-0 text-dark">Rekapitulasi</h1>
 @stop
 
 @section('content')

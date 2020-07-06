@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'eBako | Data Bagian')
 
 @section('content_header')
 	<div class="container-fluid">
