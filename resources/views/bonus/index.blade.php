@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'eBako | Data Interval Bonus')
+@section('title', config('adminlte.title').' | Data Interval Bonus')
 
 @section('content_header')
 	<div class="container-fluid">

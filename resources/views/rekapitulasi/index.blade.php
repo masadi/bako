@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'eBako | Rekapitulasi')
+@section('title', config('adminlte.title').' | Rekapitulasi')
 
 @section('content_header')
     <h1 class="m-0 text-dark">Rekapitulasi</h1>

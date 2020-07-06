@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'eBako | Profile')
+@section('title', config('adminlte.title').' | Profile')
 
 @section('content_header')
     <h1 class="m-0 text-dark">Profile</h1>
