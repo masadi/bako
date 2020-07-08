@@ -37,7 +37,7 @@ class UpdateAplikasi extends Command
      */
     public function handle()
     {
-        system('composer update');
+        //system('composer update');
         \Artisan::call('migrate');
         \Artisan::call('view:clear');
         \Artisan::call('config:cache');
