@@ -10,7 +10,7 @@
 	</div>
 </div>
 <div class="form-group row">
-	<label for="bagian_id" class="col-sm-2 col-form-label">Interval</label>
+	<label for="bagian_id" class="col-sm-2 col-form-label">Bagian</label>
 	<div class="col-sm-10">
 		<select id="bagian_id" class="select2 form-control">
 			<option value="">== Pilih Bagian ===</option>

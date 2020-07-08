@@ -1,6 +1,6 @@
 @extends('layouts.modal')
 
-@section('title', 'Tambah Data Bagian')
+@section('title', 'Tambah Data Interval Bonus')
 @section('content')
 <div class="alert alert-danger alert-error" style="display: none;"></div>
 <div class="form-group row">
