@@ -98,6 +98,8 @@ class TransaksiController extends Controller
         })->orderBy('nomor')->get();
         $data['nomor'] = $nomor;
         $data['ongkos'] = $ongkos;
+        $data['start'] = $start;
+        $data['end'] = $end;
         //return view('transaksi.pdf', $data);
 		$pdf = PDF::loadView('transaksi.pdf', $data);
 		return $pdf->stream('document.pdf');

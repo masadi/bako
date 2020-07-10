@@ -2,8 +2,13 @@
 @section('content')
 <table width="100%">
 	<tr>
-		<td width="50%">No: {{$nomor}}</td>
-		<td width="50%" class="text-right">Hari/Tanggal : {{hari_ini(date('Y-m-d')).', '.date('d/m/Y')}}</td>
+		<td width="30%">No: {{$nomor}}</td>
+		<td width="70%" class="text-right">
+			Hari/Tanggal : {{hari_ini($start).', '.date('d/m/Y', strtotime($start))}}
+			@if($start != $end)
+			s.d {{hari_ini($end).', '.date('d/m/Y', strtotime($end))}}
+			@endif
+		</td>
 	</tr>
 </table>
 <table class="table table-bordered" width="100%">
