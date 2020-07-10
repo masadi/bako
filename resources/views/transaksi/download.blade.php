@@ -4,7 +4,7 @@
 @section('content')
 <div class="alert alert-danger alert-error" style="display: none;"></div>
 <div class="form-group row">
-	<label for="bagian_id" class="col-sm-2 col-form-label">Output File</label>
+	<label for="output" class="col-sm-2 col-form-label">Output File</label>
 	<div class="col-sm-10">
 		<select id="output" class="select2 form-control">
 			<option value="">== Pilih Output ===</option>
@@ -23,6 +23,17 @@
 	<label for="ongkos" class="col-sm-2 col-form-label">Ongkos</label>
 	<div class="col-sm-10">
 		<input type="text" class="form-control" id="ongkos">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="bagian_id" class="col-sm-2 col-form-label">Bagian</label>
+	<div class="col-sm-10">
+		<select id="bagian_id" class="select2 form-control">
+			<option value="">== Pilih Bagian ===</option>
+			@foreach ($data_bagian as $bagian)
+			<option value="{{$bagian->id}}">{{$bagian->nama}}</option>
+			@endforeach
+		</select>
 	</div>
 </div>
 <div class="form-group row">
@@ -75,7 +86,8 @@
 				end:$('#end').val(),
 				output:$('#output').val(),
 				nomor:$('#nomor').val(),
-				ongkos:$('#ongkos').val()
+				ongkos:$('#ongkos').val(),
+				bagian_id:$('#bagian_id').val()
 			},
 		}).done(function(response){
 			console.log(response);

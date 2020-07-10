@@ -77,26 +77,38 @@ class TransaksiController extends Controller
                 'end' => $request->end,
                 'nomor' => $request->nomor,
                 'ongkos' => $request->ongkos,
+                'bagian_id' => $request->bagian_id,
             ];
             return route('transaksi.output_download', $params);
         } else {
             if($request->route('output')){
                 $output = 'download_'.$request->route('output');
-                return $this->{$output}($request->route('start'), $request->route('end'), $request->route('nomor'), $request->route('ongkos'));
+                return $this->{$output}($request->route('start'), $request->route('end'), $request->route('nomor'), $request->route('ongkos'), $request->route('bagian_id'));
             }
-            return view('transaksi.download');
+            $data_bagian = Bagian::get();
+            return view('transaksi.download', compact('data_bagian'));
         }
     }
-    public function download_pdf($start, $end, $nomor, $ongkos){
-        $data['transaksi'] = Transaksi::with('bagian')->whereBetween('tanggal', [$start, $end])->orderBy('nomor')->get();
+    public function download_pdf($start, $end, $nomor, $ongkos, $bagian_id = NULL){
+        $data['transaksi'] = Transaksi::with('bagian')->where(function($query) use ($start, $end, $bagian_id){
+            $query->whereBetween('tanggal', [$start, $end]);
+            if($bagian_id){
+                $query->where('bagian_id', $bagian_id);
+            }
+        })->orderBy('nomor')->get();
         $data['nomor'] = $nomor;
         $data['ongkos'] = $ongkos;
         //return view('transaksi.pdf', $data);
 		$pdf = PDF::loadView('transaksi.pdf', $data);
 		return $pdf->stream('document.pdf');
     }
-    public function download_excel($start, $end, $nomor, $ongkos){
-        $transaksi = Transaksi::with('bagian')->whereBetween('tanggal', [$start, $end])->orderBy('nomor')->get();
+    public function download_excel($start, $end, $nomor, $ongkos, $bagian_id = NULL){
+        $transaksi = Transaksi::with('bagian')->where(function($query) use ($start, $end, $bagian_id){
+            $query->whereBetween('tanggal', [$start, $end]);
+            if($bagian_id){
+                $query->where('bagian_id', $bagian_id);
+            }
+        })->orderBy('nomor')->get();
         //return (new FastExcel($transaksi))->download('file.xlsx');
         return (new FastExcel($transaksi))->download('file.xlsx', function ($transaksi) {
             return [
