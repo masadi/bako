@@ -60,6 +60,23 @@ class TransaksiController extends Controller
         }
         return response()->json($response);
     }
+    public function delete($id){
+        $delete = Transaksi::find($id);
+        if($delete->delete()){
+            $response = [
+                'title' => 'Berhasil',
+                'text' => 'Transaksi berhasil dihapus',
+                'icon' => 'success',
+            ];
+        } else {
+            $response = [
+                'title' => 'Gagal',
+                'text' => 'Transaksi gagal dihapus',
+                'icon' => 'error',
+            ];
+        }
+        return response()->json($response);
+    }
     public function simpan(Request $request){
         $messages = [
             'required' => ':attribute wajib di isi.',

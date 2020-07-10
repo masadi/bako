@@ -108,7 +108,7 @@
 			})
 	});
 	function turn_on_icheck(){
-	$('a.toggle-modal').bind('click',function(e) {
+		$('a.toggle-modal').bind('click',function(e) {
 			e.preventDefault();
 			var url = $(this).attr('href');
 			if (url.indexOf('#') == 0) {

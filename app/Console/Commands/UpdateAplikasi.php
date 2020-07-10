@@ -46,7 +46,6 @@ class UpdateAplikasi extends Command
         foreach($transaksi as $trx){
             if(!$trx->nomor_atas){
                 $trx->where('tanggal', $trx->tanggal)->update(['nomor_atas' => $i]);
-                echo $trx->tanggal.'=>'.$trx->nomor.'<br>';
                 $i++;
             }
         }
