@@ -4,6 +4,17 @@
 @section('content')
 <div class="alert alert-danger alert-error" style="display: none;"></div>
 <div class="form-group row">
+	<label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
+	<div class="col-sm-10">
+		<div class="input-group">
+			<button type="button" class="btn btn-default float-right btn-block" id="tanggal">
+				<i class="far fa-calendar-alt"></i> Pilih Tanggal
+				<i class="fas fa-caret-down"></i>
+			</button>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
 	<label for="output" class="col-sm-2 col-form-label">Output File</label>
 	<div class="col-sm-10">
 		<select id="output" class="select2 form-control">
@@ -34,17 +45,6 @@
 			<option value="{{$bagian->id}}">{{$bagian->nama}}</option>
 			@endforeach
 		</select>
-	</div>
-</div>
-<div class="form-group row">
-	<label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
-	<div class="col-sm-10">
-		<div class="input-group">
-			<button type="button" class="btn btn-default float-right btn-block" id="tanggal">
-				<i class="far fa-calendar-alt"></i> Pilih Tanggal
-				<i class="fas fa-caret-down"></i>
-			</button>
-		</div>
 	</div>
 </div>
 <input type="hidden" name="start" id="start">
