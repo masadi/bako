@@ -163,7 +163,7 @@ class TransaksiController extends Controller
                 $query->where('bagian_id', $bagian_id);
             }
         })->orderBy('nomor')->get();
-        $data['nomor'] = $nomor;
+        $data['nomor'] = ($data['transaksi']->count()) ? $data['transaksi'][0]->nomor_atas : $nomor;
         $data['ongkos'] = $ongkos;
         $data['start'] = $start;
         $data['end'] = $end;
