@@ -18,6 +18,48 @@ class TransaksiController extends Controller
         $all_bagian = Bagian::get();
         return view('transaksi.tambah', compact('all_bagian'));
     }
+    public function edit($id){
+        $all_bagian = Bagian::get();
+        $transaksi = Transaksi::find($id);
+        return view('transaksi.edit', compact('all_bagian', 'transaksi'));
+    }
+    public function update(Request $request, $id){
+        $messages = [
+            'required' => ':attribute wajib di isi.',
+            'numeric' => ':attribute harus berupa angka.',
+        ];
+        Validator::make(request()->all(), [
+            'tanggal' => 'required',
+            'bagian_id' => 'required',
+            'nomor' => 'required|numeric',
+            'bruto' => 'required|numeric',
+            'netto' => 'required|numeric',
+            'bonus' => 'required|numeric',
+		 ],
+		$messages
+        )->validate();
+        $transaksi = Transaksi::find($id);
+        $transaksi->bagian_id = $request->bagian_id;
+        $transaksi->tanggal = date('Y-m-d', strtotime($request->tanggal));
+        $transaksi->nomor = $request->nomor;
+        $transaksi->bruto = $request->bruto;
+        $transaksi->netto = $request->netto;
+        $transaksi->bonus = $request->bonus;
+        if($transaksi->save()){
+            $response = [
+                'title' => 'Berhasil',
+                'text' => 'Transaksi berhasil diperbaharui',
+                'icon' => 'success',
+            ];
+        } else {
+            $response = [
+                'title' => 'Gagal',
+                'text' => 'Transaksi gagal diperbaharui',
+                'icon' => 'error',
+            ];
+        }
+        return response()->json($response);
+    }
     public function simpan(Request $request){
         $messages = [
             'required' => ':attribute wajib di isi.',
@@ -33,9 +75,17 @@ class TransaksiController extends Controller
 		 ],
 		$messages
         )->validate();
+        $find = Transaksi::where('tanggal', date('Y-m-d', strtotime($request->tanggal)))->first();
+        if($find){
+            $nomor_atas = $find->nomor_atas;
+        } else {
+            $find = Transaksi::orderBy('nomor_atas', 'DESC')->first();
+            $nomor_atas = $find->nomor_atas + 1;
+        }
         $create = Transaksi::create([
             'bagian_id' => $request->bagian_id,
             'tanggal' => date('Y-m-d', strtotime($request->tanggal)),
+            'nomor_atas' => $nomor_atas,
             'nomor' => $request->nomor,
             'bruto' => $request->bruto,
             'netto' => $request->netto,

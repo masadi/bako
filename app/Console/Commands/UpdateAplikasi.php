@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use App\Transaksi;
 class UpdateAplikasi extends Command
 {
     /**
@@ -41,6 +41,15 @@ class UpdateAplikasi extends Command
         \Artisan::call('migrate');
         \Artisan::call('view:clear');
         \Artisan::call('config:cache');
+        $transaksi = Transaksi::select('tanggal')->groupBy('tanggal')->orderBy('tanggal')->orderBy('nomor')->get();
+        $i=1;
+        foreach($transaksi as $trx){
+            if(!$trx->nomor_atas){
+                $trx->where('tanggal', $trx->tanggal)->update(['nomor_atas' => $i]);
+                echo $trx->tanggal.'=>'.$trx->nomor.'<br>';
+                $i++;
+            }
+        }
         $this->info('Berhasil memperbaharui aplikasi');
     }
 }

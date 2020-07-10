@@ -45,6 +45,17 @@ class AjaxController extends Controller
         ->addColumn('bagian', function(Transaksi $transaksi) {
             return $transaksi->bagian->nama;
         })
+        ->addColumn('actions', function($item) {
+            $links = '<div class="btn-group dropleft">';
+			$links .= '<button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Aksi </button>';
+			$links .= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+			$links .= '<a class="dropdown-item toggle-modal" href="'.route('transaksi.edit', ['id' => $item->id]).'"><i class="fas fa-pencil-alt"></i> Ubah</a></a>';
+			$links .= '<a class="dropdown-item confirm" href="'.route('transaksi.delete', ['id' => $item->id]).'"><i class="fas fa-trash"></i> Hapus</a>';
+			$links .= '</div>';
+			$links .= '</div>';
+            return $links;
+        })
+        ->rawColumns(['actions'])
         ->make(true);
     }
     public function get_bonus(Request $request){

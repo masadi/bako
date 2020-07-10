@@ -30,6 +30,7 @@
 							<th class="text-center">Bruto</th>
 							<th class="text-center">Netto</th>
 							<th class="text-center">Bonus</th>
+							<th class="text-center">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -68,6 +69,7 @@
 			{ "data": "bruto", "name": "bruto" },
 			{ "data": "netto", "name": "netto" },
 			{ "data": "bonus", "name": "bonus" },
+			{ "data": "actions", "name": "actions", "orderable": false, "className": "text-center" },
         ],
 		"fnDrawCallback": function(oSettings){
 			turn_on_icheck();
