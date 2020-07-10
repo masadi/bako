@@ -13,7 +13,8 @@
 			<th style="width: 5%" class="text-center">No</th>
 			<th class="text-center">Bruto</th>
 			<th class="text-center">Netto</th>
-			<th class="text-center">Bonus</th>
+			<th class="text-center">Ongkos</th>
+			<th class="text-center">Jumlah</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,7 +29,8 @@
 				<td class="text-center">{{$item->nomor}}</td>
 				<td class="text-center">{{$item->bruto}}</td>
 				<td class="text-center">{{$item->netto}}</td>
-				<td class="text-right">{{rupiah($item->bonus)}}</td>
+				<td class="text-right">{{rupiah($ongkos)}}</td>
+				<td class="text-right">{{rupiah($ongkos * $item->netto)}}</td>
 			</tr>
 			<?php
 			$_bruto += $item->bruto;
@@ -36,15 +38,19 @@
 			$_bonus += $item->bonus;
 			?>
 		@endforeach
+		<tfoot>
 			<tr>
-				<td><b>Jumlah</b></td>
-				<td class="text-center"><strong>{{$transaksi->count()}}</strong></td>
-				<td class="text-center"><strong>{{$_bruto}}</strong></td>
-				<td class="text-center"><strong>{{$_netto}}</strong></td>
-				<td class="text-right"><strong>{{rupiah($_bonus)}}</strong></td>
+				<th>Sub Total</th>
+				<th class="text-center">{{$transaksi->count()}}</th>
+				<th class="text-center">{{$_bruto}}</th>
+				<th class="text-center">{{$_netto}}</th>
+				<th class="text-right">{{rupiah($ongkos)}}</th>
+				<th class="text-right">{{rupiah($ongkos * $_netto)}}</th>
 			</tr>
+		</tfoot>
 	</tbody>
 </table>
+{{--
 <table width="100%" border="1">
 	<tr>
 		<td width="50%" style="border:none"></td>
@@ -72,4 +78,5 @@
 		<td width="24%" class="text-right" style="border-bottom:none;border-left:none;border-right:none">{{rupiah(($_netto * $ongkos) + $_bonus)}}</td>
 	</tr>
 </table>
+--}}
 @endsection
