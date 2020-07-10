@@ -14,6 +14,18 @@
 	</div>
 </div>
 <div class="form-group row">
+	<label for="nomor" class="col-sm-2 col-form-label">Nomor</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="nomor">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="ongkos" class="col-sm-2 col-form-label">Ongkos</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="ongkos">
+	</div>
+</div>
+<div class="form-group row">
 	<label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
 	<div class="col-sm-10">
 		<div class="input-group">
@@ -34,8 +46,8 @@
 @section('js')
 <script>
 	moment.locale('id');
-		$('.select2').select2({theme:'bootstrap4'})
-		$('#tanggal').daterangepicker(
+	$('.select2').select2({theme:'bootstrap4'})
+	$('#tanggal').daterangepicker(
 		{
 			ranges   : {
 			'Hari ini'       : [moment(), moment()],
@@ -53,30 +65,32 @@
 			$('#end').val(end.format('YYYY-MM-DD'))
 			$('#tanggal').html('<i class="far fa-calendar-alt"></i> '+start.format('DD MMMM YYYY') + ' s/d ' + end.format('DD MMMM YYYY')+' <i class="fas fa-caret-down"></i>');
 		}
-		)
-		$('#simpan').click(function(){
-			$.ajax({
-				url: '{{route('transaksi.download')}}',
-				type: 'post',
-				data: {
-					start:$('#start').val(),
-					end:$('#end').val(),
-					output:$('#output').val(),
-				},
-			}).done(function(response){
-				console.log(response);
-				$('.alert-error').hide();
-            	$('.alert-error').html('');
-				window.open(response);
-			}).fail(function(data){
-				var html = data.responseJSON.message;
-				var errors = [];
-				$.each(data.responseJSON.errors, function(i, item){
-					errors.push(item[0]);
-				})
-				$('.alert-error').show();
-				$('.alert-error').html(errors.join('<br>'));
-			});
-		})
+	)
+	$('#simpan').click(function(){
+		$.ajax({
+			url: '{{route('transaksi.download')}}',
+			type: 'post',
+			data: {
+				start:$('#start').val(),
+				end:$('#end').val(),
+				output:$('#output').val(),
+				nomor:$('#nomor').val(),
+				ongkos:$('#ongkos').val()
+			},
+		}).done(function(response){
+			console.log(response);
+			$('.alert-error').hide();
+            $('.alert-error').html('');
+			window.open(response);
+		}).fail(function(data){
+			var html = data.responseJSON.message;
+			var errors = [];
+			$.each(data.responseJSON.errors, function(i, item){
+				errors.push(item[0]);
+			})
+			$('.alert-error').show();
+			$('.alert-error').html(errors.join('<br>'));
+		});
+	})
 </script>
 @endsection

@@ -66,30 +66,36 @@ class TransaksiController extends Controller
                 'start' => 'required',
                 'end' => 'required',
                 'output' => 'required',
+                'nomor' => 'required|numeric',
+                'ongkos' => 'required|numeric',
              ],
             $messages
             )->validate();
             $params = [
                 'output' => $request->output,
                 'start' => $request->start,
-                'end' => $request->end
+                'end' => $request->end,
+                'nomor' => $request->nomor,
+                'ongkos' => $request->ongkos,
             ];
             return route('transaksi.output_download', $params);
         } else {
             if($request->route('output')){
                 $output = 'download_'.$request->route('output');
-                return $this->{$output}($request->route('start'), $request->route('end'));
+                return $this->{$output}($request->route('start'), $request->route('end'), $request->route('nomor'), $request->route('ongkos'));
             }
             return view('transaksi.download');
         }
     }
-    public function download_pdf($start, $end){
+    public function download_pdf($start, $end, $nomor, $ongkos){
         $data['transaksi'] = Transaksi::with('bagian')->whereBetween('tanggal', [$start, $end])->orderBy('nomor')->get();
+        $data['nomor'] = $nomor;
+        $data['ongkos'] = $ongkos;
         //return view('transaksi.pdf', $data);
 		$pdf = PDF::loadView('transaksi.pdf', $data);
 		return $pdf->stream('document.pdf');
     }
-    public function download_excel($start, $end){
+    public function download_excel($start, $end, $nomor, $ongkos){
         $transaksi = Transaksi::with('bagian')->whereBetween('tanggal', [$start, $end])->orderBy('nomor')->get();
         //return (new FastExcel($transaksi))->download('file.xlsx');
         return (new FastExcel($transaksi))->download('file.xlsx', function ($transaksi) {
