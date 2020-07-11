@@ -92,13 +92,15 @@ class TransaksiController extends Controller
 		 ],
 		$messages
         )->validate();
-        $find = Transaksi::where('tanggal', date('Y-m-d', strtotime($request->tanggal)))->first();
-        if($find){
-            $nomor_atas = $find->nomor_atas;
+        $find = Transaksi::where('tanggal', date('Y-m-d', strtotime($request->tanggal)))->where('bagian_id', $request->bagian_id)->first();
+        $nomor_atas = ($find) ? $find->nomor_atas + 1 : 1;
+        /*if($find){
+            //$nomor_atas = $find->nomor_atas;
+            
         } else {
-            $find = Transaksi::orderBy('nomor_atas', 'DESC')->first();
-            $nomor_atas = $find->nomor_atas + 1;
-        }
+            $find = Transaksi::where('tanggal', date('Y-m-d', strtotime($request->tanggal)))->where('bagian_id', $request->bagian_id)->orderBy('nomor_atas', 'DESC')->first();
+            
+        }*/
         $create = Transaksi::create([
             'bagian_id' => $request->bagian_id,
             'tanggal' => date('Y-m-d', strtotime($request->tanggal)),
@@ -133,7 +135,7 @@ class TransaksiController extends Controller
                 'start' => 'required',
                 'end' => 'required',
                 'output' => 'required',
-                'nomor' => 'required|numeric',
+                //'nomor' => 'required|numeric',
                 'ongkos' => 'required|numeric',
              ],
             $messages
@@ -142,7 +144,7 @@ class TransaksiController extends Controller
                 'output' => $request->output,
                 'start' => $request->start,
                 'end' => $request->end,
-                'nomor' => $request->nomor,
+                //'nomor' => $request->nomor,
                 'ongkos' => $request->ongkos,
                 'bagian_id' => $request->bagian_id,
             ];
@@ -150,20 +152,21 @@ class TransaksiController extends Controller
         } else {
             if($request->route('output')){
                 $output = 'download_'.$request->route('output');
-                return $this->{$output}($request->route('start'), $request->route('end'), $request->route('nomor'), $request->route('ongkos'), $request->route('bagian_id'));
+                return $this->{$output}($request->route('start'), $request->route('end'), $request->route('ongkos'), $request->route('bagian_id'));
+                //return $this->{$output}($request->route('start'), $request->route('end'), $request->route('nomor'), $request->route('ongkos'), $request->route('bagian_id'));
             }
             $data_bagian = Bagian::get();
             return view('transaksi.download', compact('data_bagian'));
         }
     }
-    public function download_pdf($start, $end, $nomor, $ongkos, $bagian_id = NULL){
+    public function download_pdf($start, $end, $ongkos, $bagian_id = NULL){
         $data['transaksi'] = Transaksi::with('bagian')->where(function($query) use ($start, $end, $bagian_id){
             $query->whereBetween('tanggal', [$start, $end]);
             if($bagian_id){
                 $query->where('bagian_id', $bagian_id);
             }
         })->orderBy('nomor')->get();
-        $data['nomor'] = ($data['transaksi']->count()) ? $data['transaksi'][0]->nomor_atas : $nomor;
+        $data['nomor'] = ($data['transaksi']->count()) ? $data['transaksi'][0]->nomor_atas : '-';
         $data['ongkos'] = $ongkos;
         $data['start'] = $start;
         $data['end'] = $end;
@@ -171,7 +174,7 @@ class TransaksiController extends Controller
 		$pdf = PDF::loadView('transaksi.pdf', $data);
 		return $pdf->stream('document.pdf');
     }
-    public function download_excel($start, $end, $nomor, $ongkos, $bagian_id = NULL){
+    public function download_excel($start, $end, $ongkos, $bagian_id = NULL){
         $transaksi = Transaksi::with('bagian')->where(function($query) use ($start, $end, $bagian_id){
             $query->whereBetween('tanggal', [$start, $end]);
             if($bagian_id){

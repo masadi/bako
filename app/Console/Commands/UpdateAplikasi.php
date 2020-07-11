@@ -41,11 +41,11 @@ class UpdateAplikasi extends Command
         \Artisan::call('migrate');
         \Artisan::call('view:clear');
         \Artisan::call('config:cache');
-        $transaksi = Transaksi::select('tanggal')->groupBy('tanggal')->orderBy('tanggal')->orderBy('nomor')->get();
+        $transaksi = Transaksi::select('tanggal', 'bagian_id')->groupBy('tanggal')->groupBy('bagian_id')->orderBy('tanggal')->orderBy('nomor')->get();
         $i=1;
         foreach($transaksi as $trx){
             if(!$trx->nomor_atas){
-                $trx->where('tanggal', $trx->tanggal)->update(['nomor_atas' => $i]);
+                $trx->where('tanggal', $trx->tanggal)->where('bagian_id', $trx->bagian_id)->update(['nomor_atas' => $i]);
                 $i++;
             }
         }

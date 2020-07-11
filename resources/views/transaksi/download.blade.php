@@ -24,12 +24,12 @@
 		</select>
 	</div>
 </div>
-<div class="form-group row">
+<!--div class="form-group row">
 	<label for="nomor" class="col-sm-2 col-form-label">Nomor</label>
 	<div class="col-sm-10">
 		<input type="text" class="form-control" id="nomor">
 	</div>
-</div>
+</div-->
 <div class="form-group row">
 	<label for="ongkos" class="col-sm-2 col-form-label">Ongkos</label>
 	<div class="col-sm-10">
@@ -85,7 +85,7 @@
 				start:$('#start').val(),
 				end:$('#end').val(),
 				output:$('#output').val(),
-				nomor:$('#nomor').val(),
+				//nomor:$('#nomor').val(),
 				ongkos:$('#ongkos').val(),
 				bagian_id:$('#bagian_id').val()
 			},

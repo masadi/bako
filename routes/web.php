@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
-Route::get('/', function () {
+Auth::routes(['register' => false]);
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('bagian')->group(function () {
         Route::get('/', 'BagianController@index')->name('bagian.index');
@@ -36,7 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/delete/{id}', 'TransaksiController@delete')->name('transaksi.delete');
         Route::post('/update/{id}', 'TransaksiController@update')->name('transaksi.update');
         Route::get('/download', 'TransaksiController@download')->name('transaksi.download');
-        Route::get('/download/{output}/{start}/{end}/{nomor}/{ongkos}/{bagian_id?}', 'TransaksiController@download')->name('transaksi.output_download');
+        Route::get('/download/{output}/{start}/{end}/{ongkos}/{bagian_id?}', 'TransaksiController@download')->name('transaksi.output_download');
         Route::post('/download', 'TransaksiController@download')->name('transaksi.download');
         Route::post('/simpan', 'TransaksiController@simpan')->name('transaksi.simpan');
     });
